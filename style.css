@@ -22,7 +22,6 @@ body {
   padding: 0 2rem;
 }
 
-/* --- Accessibility: Reduce Motion --- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -32,7 +31,6 @@ body {
   }
 }
 
-/* Navigation */
 nav {
   background-color: var(--card-bg);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -40,7 +38,7 @@ nav {
   width: 100%;
   top: 0;
   z-index: 1000;
-  transition: top 0.3s; /* Animation: For hiding navbar on scroll */
+  transition: top 0.3s;
 }
 
 nav .container {
@@ -84,22 +82,20 @@ nav .container {
   border-radius: 50px;
   text-decoration: none;
   font-weight: 500;
-  transition: background-color 0.3s, transform 0.3s; /* Animation: Added transform */
+  transition: background-color 0.3s, transform 0.3s;
 }
 
 .btn-contact:hover {
   background-color: #3b3882;
-  transform: translateY(-2px); /* Animation: Hover effect */
+  transform: translateY(-2px);
 }
 
-/* Header */
 header {
   background: linear-gradient(to right, #e0eafc, #cfdef3);
   padding: 12rem 0 6rem;
   text-align: center;
 }
 
-/* Animation: Keyframes for header content */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
@@ -110,19 +106,19 @@ header {
   font-weight: 700;
   color: var(--primary-color);
   margin-bottom: 0.5rem;
-  animation: fadeInUp 1s ease-out; /* Animation: Apply animation */
+  animation: fadeInUp 1s ease-out;
 }
 
 .header-content .subtitle {
   font-size: 1.2rem;
   color: var(--text-color);
   margin-bottom: 2rem;
-  animation: fadeInUp 1s ease-out 0.3s; /* Animation: Apply animation with delay */
+  animation: fadeInUp 1s ease-out 0.3s;
   animation-fill-mode: both;
 }
 
 .header-buttons {
-  animation: fadeInUp 1s ease-out 0.6s; /* Animation: Apply animation with delay */
+  animation: fadeInUp 1s ease-out 0.6s;
   animation-fill-mode: both;
 }
 
@@ -131,14 +127,14 @@ header {
   border-radius: 50px;
   text-decoration: none;
   font-weight: 600;
-  transition: all 0.3s ease; /* Animation: Smooth transition for all properties */
+  transition: all 0.3s ease;
   display: inline-block;
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 .btn:hover {
-    transform: translateY(-3px); /* Animation: Lift effect on hover */
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15); /* Animation: Enhanced shadow on hover */
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 
 .btn-primary {
@@ -160,19 +156,23 @@ header {
     color: white;
 }
 
-
-/* General Section Styling & Scroll Animations */
 section {
   padding: 6rem 0;
-  opacity: 0; /* Animation: Start hidden */
-  transform: translateY(30px); /* Animation: Start slightly lower */
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
-section.visible {
-  opacity: 1; /* Animation: Fade in */
-  transform: translateY(0); /* Animation: Move to original position */
+/* --- NEW and IMPORTANT --- */
+/* This is our new class for elements that should fade in on scroll */
+.hidden {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
+/* This class will be added by JavaScript when the element is visible */
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 
 .section-title {
   text-align: center;
@@ -181,7 +181,6 @@ section.visible {
   color: var(--primary-color);
 }
 
-/* About Section */
 .about-container {
   display: flex;
   align-items: center;
@@ -199,7 +198,6 @@ section.visible {
   flex: 1.5;
 }
 
-/* Skills Section - Staggered Animation */
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -212,22 +210,13 @@ section.visible {
   border-radius: 8px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.05);
   font-weight: 500;
-  /* Animation: Initial state for staggered effect */
-  opacity: 0;
-  transform: translateY(20px);
-  transition: transform 0.4s ease, box-shadow 0.4s ease, opacity 0.4s ease;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 .skill-card:hover {
-  transform: translateY(-10px); /* Animation: Lift effect on hover */
-  box-shadow: 0 12px 25px rgba(74, 71, 163, 0.15); /* Animation: Glow effect */
-}
-/* Animation: Staggered delay applied by JS when parent is visible */
-section.visible .skill-card {
-    opacity: 1;
-    transform: translateY(0);
+  transform: translateY(-10px);
+  box-shadow: 0 12px 25px rgba(74, 71, 163, 0.15);
 }
 
-/* Projects Section */
 #projects {
     background-color: #eef2f9;
 }
@@ -242,10 +231,10 @@ section.visible .skill-card {
   border-radius: 8px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.05);
   border-left: 4px solid var(--accent-color);
-  transition: transform 0.4s ease, box-shadow 0.4s ease; /* Animation: Hover transition */
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 .project-card:hover {
-  transform: translateY(-10px); /* Animation: Lift effect */
+  transform: translateY(-10px);
   box-shadow: 0 12px 25px rgba(0,0,0,0.1);
 }
 .project-card h3 {
@@ -253,7 +242,6 @@ section.visible .skill-card {
     color: var(--primary-color);
 }
 
-/* Experience Section (Timeline) */
 .timeline {
   position: relative;
   max-width: 600px;
@@ -266,10 +254,10 @@ section.visible .skill-card {
   border-radius: 8px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.05);
   border-left: 4px solid var(--secondary-color);
-  transition: transform 0.4s ease, box-shadow 0.4s ease; /* Animation: Hover transition */
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 .timeline-item:hover {
-  transform: translateX(10px); /* Animation: Slide right on hover */
+  transform: translateX(10px);
   box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 }
 .timeline-item h4 {
@@ -281,7 +269,6 @@ section.visible .skill-card {
     font-style: italic;
 }
 
-/* Contact Section */
 .contact-container {
   text-align: center;
 }
@@ -303,14 +290,12 @@ section.visible .skill-card {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  transition: color 0.3s; /* Animation: Hover transition */
+  transition: color 0.3s;
 }
 .social-links a:hover {
     color: var(--primary-color);
 }
 
-
-/* Footer */
 footer {
   background-color: var(--text-color);
   color: var(--bg-color);
@@ -318,7 +303,6 @@ footer {
   padding: 1.5rem 0;
 }
 
-/* Responsive & Hamburger Menu */
 .hamburger {
   display: none;
   cursor: pointer;
