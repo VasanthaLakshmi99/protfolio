@@ -11,53 +11,46 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       e.preventDefault();
-
       if (navLinks.classList.contains('active')) {
         navLinks.classList.remove('active');
       }
-      
       document.querySelector(this.getAttribute('href')).scrollIntoView({
         behavior: 'smooth'
       });
     });
   });
 
-  // --- Animation on Scroll ---
+  // --- NEW and IMPORTANT: Scroll Animation Logic ---
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
+        // When the element is in view, add the 'visible' class to trigger the animation
         entry.target.classList.add('visible');
-
-        // Staggered animation for skill cards
-        if (entry.target.classList.contains('skills-grid')) {
-          const cards = entry.target.querySelectorAll('.skill-card');
-          cards.forEach((card, index) => {
-            card.style.transitionDelay = `${index * 100}ms`;
-          });
-        }
       }
     });
   }, {
-    threshold: 0.1 // Trigger when 10% of the element is visible
+    threshold: 0.15 // Trigger when 15% of the element is visible
   });
 
-  // Observe all sections and grids that need animation
-  const elementsToAnimate = document.querySelectorAll('section, .skills-grid');
-  elementsToAnimate.forEach((el) => observer.observe(el));
+  // Get all sections, add the 'hidden' class to prepare them for animation
+  const sectionsToAnimate = document.querySelectorAll('section');
+  sectionsToAnimate.forEach((section) => {
+    section.classList.add('hidden');
+    observer.observe(section); // Start observing the section
+  });
 
   // --- Hide Nav on Scroll Down, Show on Scroll Up ---
   let lastScrollTop = 0;
   const navbar = document.querySelector('nav');
   window.addEventListener('scroll', function() {
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    if (scrollTop > lastScrollTop) {
+    if (scrollTop > lastScrollTop && scrollTop > 100) { // Add a buffer
       // Scroll Down
       navbar.style.top = '-80px'; // Hide navbar
     } else {
       // Scroll Up
       navbar.style.top = '0'; // Show navbar
     }
-    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
   }, false);
-
 });
