@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
   const hamburger = document.querySelector('.hamburger');
   const navLinks = document.querySelector('.nav-links');
-  const animatedElements = document.querySelectorAll('.animate-on-scroll');
 
   // Toggle mobile navigation
   hamburger.addEventListener('click', () => {
@@ -21,22 +20,30 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // --- NEW, SIMPLER SCROLL ANIMATION ---
-  function checkAndAnimate() {
-    const triggerBottom = window.innerHeight * 0.85; // Set the trigger point
+  // --- SCROLL ANIMATION LOGIC ---
+  const animatedElements = document.querySelectorAll('.animate-on-scroll');
 
-    animatedElements.forEach(element => {
-      const elementTop = element.getBoundingClientRect().top; // Get element's position
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        
+        // --- NEW: Staggered animation logic for skill cards ---
+        if (entry.target.id === 'skills') {
+          const skillCards = entry.target.querySelectorAll('.skill-card');
+          skillCards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 100}ms`;
+          });
+        }
 
-      if (elementTop < triggerBottom) {
-        element.classList.add('visible');
+        observer.unobserve(entry.target);
       }
     });
-  }
+  }, {
+    threshold: 0.15 
+  });
 
-  // Run the check when the page loads and on every scroll
-  window.addEventListener('scroll', checkAndAnimate);
-  checkAndAnimate(); // Run once on load for elements already in view
+  animatedElements.forEach((el) => observer.observe(el));
 
   // --- Hide Nav on Scroll Down, Show on Scroll Up ---
   let lastScrollTop = 0;
